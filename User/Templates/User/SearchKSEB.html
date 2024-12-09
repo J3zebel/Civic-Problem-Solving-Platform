@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <td>District</td>
+                <td><select name="sel_district" id="sel_district" > <option value="">--Select--</option>
+                    {% for i in district %}
+                    <option value="{{i.id}}">{{i.district_name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td><select name="place" id="place" ><option value="">--Select--</option>
+                    
+                    </select></td>
+            </tr>
+            <tr>
+                <td>Local place</td>
+                <td><select name="local" id="local" onchange="searchKSEB()"><option value="">--Select--</option>
+                    </select></td>
+            </tr>
+            
+        </table>
+        <table border="1" id="result">
+            <tr>
+                <td>Name</td>
+                <td>Contact</td>
+                <td>Email</td>
+                <td>Address</td>
+                <td>Action</td>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{i.kseb_name}}</td>
+                <td> {{i.kseb_contact}}</td>
+                <td>{{i.kseb_email}}</td>
+                <td>{{i.kseb_address}}</td>
+                <td ><a href="{% url 'User:ksebcomplaint' i.kseb_id %}">Complaint</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#sel_district").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'Guest:ajaxplace' %}"
+        $.ajax({
+            url: ur,
+            data: { did: did, },
+            success: function (data) {
+                $("#place").html(data);
+            },
+        });
+    });
+
+ $("#place").change(function () {
+        var pid = $(this).val();
+        var ur = "{% url 'Guest:ajaxlocal' %}"
+        $.ajax({
+            url: ur,
+            data: { pid: pid, },
+            success: function (data) {
+                $("#local").html(data);
+            },
+        });
+    });
+
+    function searchKSEB() {
+        var localplace = document.getElementById("local").value
+        
+        $.ajax({
+            url: "{% url 'User:ajaxsearchkseb' %}",
+            data: { localplace: localplace, }, 
+            success: function (data) {
+                $("#result").html(data);
+               
+            },
+        });
+    }
+</script>

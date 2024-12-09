@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token%}
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="txt_name" id=""></td>
+            </tr>
+            <tr>
+                <td>E-mail</td>
+                <td><input type="text" name="txt_email" id=""></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text" name="txt_contact" id=""></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" name="txt_address" id=""></td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td><select name="district" id="district"> <option value="">--Select--</option>
+                    {% for i in district %}
+                    <option value="{{i.id}}">{{i.district_name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td><select name="place" id="place"><option value="">--Select--</option>
+                    {% for i in place %}
+                    <option value="{{i.id}}">{{i.place_name}}</option>
+                    {% endfor %}
+                    </select></td>
+            </tr>
+            <tr>
+                <td>Local place</td>
+                <td><select name="local" id="local"><option value="">--Select--</option>
+                    </select></td>
+            </tr>
+            <tr>
+                <td>Proof</td>
+                <td><input type="file" name="photo" id=""></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="txt_password" id=""></td>
+            </tr>
+            
+            <tr>
+                <td><input type="submit" value="Register"></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+{% if error %}
+<script>
+    alert("{{error}}");
+    window.location="{% url 'Guest:kseb' %}";
+</script>
+{% endif %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $("#district").change(function () {
+        var did = $(this).val();
+        var ur = "{% url 'Guest:ajaxplace' %}"
+        $.ajax({
+            url: ur,
+            data: { did: did, },
+            success: function (data) {
+                $("#place").html(data);
+            },
+        });
+    });
+
+ $("#place").change(function () {
+        var pid = $(this).val();
+        var ur = "{% url 'Guest:ajaxlocal' %}"
+        $.ajax({
+            url: ur,
+            data: { pid: pid, },
+            success: function (data) {
+                $("#local").html(data);
+            },
+        });
+    });
+</script>

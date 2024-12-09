@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        <table>
+            <tr>
+                <td>District</td>
+                <td><select name="sel_district" id="sel_district" onchange="searchMunicipality()"> <option value="">--Select--</option>
+                    {% for i in district %}
+                    <option value="{{i.id}}">{{i.district_name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            
+        </table>
+        <table border="1" id="result">
+            <tr>
+                <td>Name</td>
+                <td>Contact</td>
+                <td>Email</td>
+                <td>Address</td>
+                <td>Action</td>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{i.mun_name}}</td>
+                <td> {{i.mun_contact}}</td>
+                <td>{{i.mun_email}}</td>
+                <td>{{i.mun_address}}</td>
+                <td ><a href="{% url 'User:muncipalitycomplaint' i.mun_id %}">Complaint</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function searchMunicipality() {
+        var district = document.getElementById("sel_district").value
+        
+        $.ajax({
+            url: "{% url 'User:ajaxsearchmunicipality' %}",
+            data: { district: district, }, 
+            success: function (data) {
+                $("#result").html(data);
+               
+            },
+        });
+    }
+</script>
