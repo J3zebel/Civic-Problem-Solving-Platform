@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from Guest.models import *
+from User.models import *
 from django.conf import settings
 
 # Create your views here.
@@ -43,3 +44,19 @@ def changepassword(request):
             return render(request,"PWD/ChangePassword.html",{'msg':"Invalid Password"})
     else:
         return render(request, "PWD/ChangePassword.html")
+    
+
+def viewcomplaint(request):
+    pwd=tbl_pwd.objects.get(pwd_id=request.session['pid']) 
+    complaint=tbl_complaint.objects.filter(pwd_id=pwd)
+    return render(request, "PWD/Viewcomplaint.html",{'complaint':complaint})
+
+def reply(request,id):
+    complaint=tbl_complaint.objects.get(id=id)
+    if request.method=="POST":
+        complaint.complaint_response=request.POST.get("txt_reply")
+        complaint.complaint_status="1"
+        complaint.save()
+        return redirect("PWD:viewcomplaint")
+    else:
+        return render(request, "PWD/Reply.html")

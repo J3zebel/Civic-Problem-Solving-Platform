@@ -194,3 +194,21 @@ def searchkseb(request):
 def ajaxsearchkseb(request): 
     kseb = tbl_kseb.objects.filter(localplace=request.GET.get("localplace"))
     return render(request,"User/Ajaxsearchkseb.html",{'data':kseb})
+
+
+def feedback(request):
+    user = tbl_user.objects.get(user_id=request.session['uid'])
+    feedback=tbl_feedback.objects.all()
+    if request.method=="POST":
+        content=request.POST.get("txt_content")
+        tbl_feedback.objects.create(
+            feedback_content=content ,user=user
+        )
+        return render(request,'User/Feedback.html',{'msg':"Data inserted"})
+    else:
+        return render(request,'User/Feedback.html',{'feedback':feedback})
+
+def mycomplaints(request):
+    kseb = tbl_kseb.objects.all()
+    ksebcomplaint=tbl_complaint.objects.filter(user_id=request.session['uid'], kseb__in=kseb)
+    return render(request, "User/Mycomplaints.html",{'ksebcomplaint':ksebcomplaint})

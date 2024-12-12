@@ -7,6 +7,7 @@
 </head>
 <body>
     <form action="" method="post">
+        {% csrf_token %}
         <table>
             <tr>
                 <td>Feedback</td>
@@ -21,6 +22,28 @@
                 <td></td>
             </tr>
         </table>
+        <table>
+            <tr>
+                <td>#</td>
+                <td>Content</td>
+                <td>Date</td>
+                <td>Action</td>
+            </tr>
+            {% for i in feedback %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.feedback_content}}</td>
+                <td>{{i.feedback_date}}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </table>
     </form>
 </body>
 </html>
+{% if msg %}
+<script>
+    alert("{{msg}}")
+    window.location="{% url 'User:feedback' %}"
+</script>
+{% endif %}

@@ -19,4 +19,6 @@ urlpatterns = [
     path('ajaxsearchpwd/',views.ajaxsearchpwd,name="ajaxsearchpwd"),
     path('Searchkseb/',views.searchkseb,name="searchkseb"),
     path('ajaxsearchkseb/',views.ajaxsearchkseb,name="ajaxsearchkseb"),
+    path('Feedback/',views.feedback,name="feedback"),
+    path('Mycompliants/',views.mycomplaints,name="mycomplaints"),
 ] 

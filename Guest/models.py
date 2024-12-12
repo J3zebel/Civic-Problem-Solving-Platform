@@ -14,6 +14,7 @@ class tbl_muncipality(models.Model):
     mun_proof=models.URLField()
     mun_password=models.CharField(max_length=30)
     district=models.ForeignKey(tbl_district,on_delete=models.CASCADE)
+    mun_status=models.IntegerField(default=0)
 
 class tbl_user(models.Model):
     user_id=models.TextField(primary_key=True, editable=False)
@@ -25,6 +26,7 @@ class tbl_user(models.Model):
     muncipality=models.ForeignKey(tbl_muncipality,on_delete=models.CASCADE)
     user_photo=models.URLField()
     user_password=models.CharField(max_length=30)
+    user_status=models.IntegerField(default=0)
 
 class tbl_mvd(models.Model):
     mvd_id=models.TextField(primary_key=True, editable=False)
@@ -35,6 +37,7 @@ class tbl_mvd(models.Model):
     mvd_proof=models.URLField()
     mvd_password=models.CharField(max_length=30)
     district=models.ForeignKey(tbl_district,on_delete=models.CASCADE)
+    mvd_status=models.IntegerField(default=0)
 
 class tbl_pwd(models.Model):
     pwd_id=models.TextField(primary_key=True, editable=False)
@@ -45,6 +48,7 @@ class tbl_pwd(models.Model):
     pwd_proof=models.URLField()
     pwd_password=models.CharField(max_length=30)
     district=models.ForeignKey(tbl_district,on_delete=models.CASCADE)
+    pwd_status=models.IntegerField(default=0)
 
 
 class tbl_kseb(models.Model):
@@ -56,4 +60,5 @@ class tbl_kseb(models.Model):
     localplace=models.ForeignKey(tbl_localplace,on_delete=models.CASCADE)
     kseb_proof=models.URLField()
     kseb_password=models.CharField(max_length=30)
+    kseb_status=models.IntegerField(default=0)
 

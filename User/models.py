@@ -15,3 +15,9 @@ class tbl_complaint(models.Model):
     muncipality=models.ForeignKey(tbl_muncipality,on_delete=models.CASCADE,null=True)
     complaint_status=models.IntegerField(default=0)
     complaint_date=models.DateField(auto_now_add=True)
+
+
+class tbl_feedback(models.Model):
+    feedback_content=models.CharField(max_length=200)
+    user=models.ForeignKey(tbl_user,on_delete=models.CASCADE)
+    feedback_date=models.DateField(auto_now_add=True)

@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from Admin.models import *
+from Guest.models import *
 
 # Create your views here.
 def sum(request):
@@ -209,3 +210,75 @@ def localplace(request):
     else:
         return render(request,'Admin/Localplace.html',{'district':dis})
     
+
+def viewkseb(request):
+    kseb=tbl_kseb.objects.all()
+    return render(request, "Admin/ViewKseb.html",{'kseb':kseb})
+
+def viewmuncipality(request):
+    muncipality=tbl_muncipality.objects.all()
+    return render(request, "Admin/ViewMuncipality.html",{'muncipality':muncipality})
+
+def viewmvd(request):
+    mvd=tbl_mvd.objects.all()
+    return render(request, "Admin/ViewMvd.html",{'mvd':mvd})
+
+def viewpwd(request):
+    pwd=tbl_pwd.objects.all()
+    return render(request, "Admin/ViewPwd.html",{'pwd':pwd})
+
+def viewuser(request):
+    user=tbl_user.objects.all()
+    return render(request, "Admin/ViewUser.html",{'user':user})
+
+def ksebaccept(request,id):
+    kseb=tbl_kseb.objects.get(kseb_id=id)
+    kseb.kseb_status="1"
+    kseb.save()
+    return redirect("Admin:viewkseb")
+def ksebreject(request,id):
+    kseb=tbl_kseb.objects.get(kseb_id=id)
+    kseb.kseb_status="2"
+    kseb.save()
+    return redirect("Admin:viewkseb")
+
+def munaccept(request,id):
+    muncipality=tbl_muncipality.objects.get(mun_id=id)
+    muncipality.mun_status="1"
+    muncipality.save()
+    return redirect("Admin:viewmunciplity")
+def munreject(request,id):
+    muncipality=tbl_muncipality.objects.get(mun_id=id)
+    muncipality.mun_status="2"
+    muncipality.save()
+    return redirect("Admin:viewmunciplity")
+
+def mvdaccept(request,id):
+    mvd=tbl_mvd.objects.get(mvd_id=id)
+    mvd.mvd_status="1"
+    mvd.save()
+    return redirect("Admin:viewmvd")
+def mvdreject(request,id):
+    mvd=tbl_mvd.objects.get(mvd_id=id)
+    mvd.mvd_status="2"
+    mvd.save()
+    return redirect("Admin:viewmvd")
+
+def pwdaccept(request,id):
+    pwd=tbl_pwd.objects.get(pwd_id=id)
+    pwd.pwd_status="1"
+    pwd.save()
+    return redirect("Admin:viewpwd")
+def pwdreject(request,id):
+    pwd=tbl_pwd.objects.get(pwd_id=id)
+    pwd.pwd_status="2"
+    pwd.save()
+    return redirect("Admin:viewpwd")
+
+def userremove(request,id):
+    user=tbl_user.objects.get(user_id=id)
+    user.user_status="1"
+    user.save()
+    return redirect("Admin:viewuser")
+  
+

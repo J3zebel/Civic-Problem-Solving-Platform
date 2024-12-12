@@ -7,6 +7,8 @@ urlpatterns = [
     path('My Profile/',views.myprofile,name="myprofile"),
     path('Edit Profile/',views.editprofile,name="editprofile"),
     path('Change Password/',views.changepassword,name="changepassword"),
+    path('View Complaint/',views.viewcomplaint,name="viewcomplaint"),
+    path('Reply/<int:id>',views.reply,name="reply")
 ]
 
     
