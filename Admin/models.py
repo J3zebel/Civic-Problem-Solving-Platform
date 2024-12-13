@@ -6,9 +6,10 @@ class tbl_district(models.Model):
 class tbl_category(models.Model):
     category_name=models.CharField(max_length=50)
 class tbl_admin(models.Model):
+    admin_id=models.TextField(primary_key=True,editable=False)
     admin_name=models.CharField(max_length=30)
     admin_email=models.CharField(max_length=40)
-    admin_pswd=models.CharField(max_length=30)
+    admin_password=models.CharField(max_length=30)
 
 class tbl_place(models.Model):
     district=models.ForeignKey(tbl_district,on_delete=models.CASCADE)

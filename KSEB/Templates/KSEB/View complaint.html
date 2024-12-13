@@ -16,7 +16,8 @@
                 <td>Photo</td>
                 <td>Title</td>
                 <td>Content</td>
-                <td>Action</td>
+                <td>Response</td>
+                <td>Updates</td>
             </tr>
             {% for i in complaint %}
             <tr>
@@ -31,7 +32,11 @@
                     Replied
                     {% else %}
                     <a href="{% url 'KSEB:reply' i.id %}">Reply</a>
-                    {% endif %}</td>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'KSEB:updates' i.id %}">Update Status</a>
+                </td>
             </tr>
             {% endfor %}
         </table>

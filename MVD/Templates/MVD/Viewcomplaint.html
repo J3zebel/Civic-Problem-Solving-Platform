@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MVD</title>
 </head>
+
 <body>
     <form action="" method="post">
         {% csrf_token %}
@@ -16,6 +18,7 @@
                 <td>Photo</td>
                 <td>Title</td>
                 <td>Content</td>
+                <td>Reply</td>
                 <td>Action</td>
             </tr>
             {% for i in complaint %}
@@ -30,10 +33,15 @@
                     Replied
                     {% else %}
                     <a href="{% url 'MVD:reply' i.id %}">Reply</a>
-                    {% endif %}</td>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'MVD:updates' i.id %}">Update Status</a>
+                </td>
             </tr>
             {% endfor %}
         </table>
     </form>
 </body>
+
 </html>

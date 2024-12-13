@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from Guest.models import *
 from User.models import *
+from MVD.models import *
 from django.conf import settings
+from django.http import JsonResponse
 from supabase import create_client
 # Create your views here.
 
@@ -211,4 +213,39 @@ def feedback(request):
 def mycomplaints(request):
     kseb = tbl_kseb.objects.all()
     ksebcomplaint=tbl_complaint.objects.filter(user_id=request.session['uid'], kseb__in=kseb)
-    return render(request, "User/Mycomplaints.html",{'ksebcomplaint':ksebcomplaint})
+    muncipality = tbl_muncipality.objects.all()
+    muncipalitycomplaint=tbl_complaint.objects.filter(user_id=request.session['uid'], muncipality__in=muncipality)
+    mvd = tbl_mvd.objects.all()
+    mvdcomplaint=tbl_complaint.objects.filter(user_id=request.session['uid'], mvd__in=mvd)
+    pwd = tbl_pwd.objects.all()
+    pwdcomplaint=tbl_complaint.objects.filter(user_id=request.session['uid'], pwd__in=pwd)
+    return render(request, "User/Mycomplaints.html",{'ksebcomplaint':ksebcomplaint,'muncipalitycomplaint':muncipalitycomplaint,'mvdcomplaint':mvdcomplaint,'pwdcomplaint':pwdcomplaint})
+
+def updates(request):
+    update=tbl_updates.objects.all()
+    return render(request,'User/Updates.html',{'update':update})
+
+def publiccomplaint(request):
+    complaint=tbl_complaint.objects.all()
+    likecount=0
+    for i in complaint:
+        likecount = tbl_like.objects.filter(complaint=i.id).count()
+        mycount = tbl_like.objects.filter(complaint=i.id,user=request.session["uid"]).count()
+        if mycount > 0:
+            i.condition = 1
+        else:
+            i.condition = 0
+        i.count = likecount
+    return render(request,'User/PublicComplaints.html',{'complaint':complaint})
+
+
+def ajaxlike(request):
+    likecount = tbl_like.objects.filter(user=request.session["uid"],complaint=request.GET.get("comid")).count()
+    if likecount > 0:
+        tbl_like.objects.get(user_id=request.session["uid"],complaint=request.GET.get("comid")).delete()
+        count = tbl_like.objects.filter(user=request.session["uid"],complaint=request.GET.get("comid")).count()
+        return JsonResponse({"color":1,"count":count})
+    else:
+        tbl_like.objects.create(user=tbl_user.objects.get(user_id=request.session["uid"]),complaint=tbl_complaint.objects.get(id=request.GET.get("comid")))
+        count = tbl_like.objects.filter(user=request.session["uid"],complaint=request.GET.get("comid")).count()
+        return JsonResponse({"color":0,"count":count})

@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from Guest.models import *
 from User.models import *
+from MVD.models import *
+from django.db.models import Count
 from django.conf import settings
 
 # Create your views here.
@@ -48,7 +50,7 @@ def changepassword(request):
 
 def viewcomplaint(request):
     pwd=tbl_pwd.objects.get(pwd_id=request.session['pid']) 
-    complaint=tbl_complaint.objects.filter(pwd_id=pwd)
+    complaint=tbl_complaint.objects.filter(pwd_id=pwd).annotate(like_count=Count('tbl_like')).order_by('-like_count')
     return render(request, "PWD/Viewcomplaint.html",{'complaint':complaint})
 
 def reply(request,id):
@@ -60,3 +62,14 @@ def reply(request,id):
         return redirect("PWD:viewcomplaint")
     else:
         return render(request, "PWD/Reply.html")
+
+
+def update(request,id):
+    if request.method=="POST":
+        tbl_updates.objects.create(
+            complaint=tbl_complaint.objects.get(id=id),
+            update_content=request.POST.get("txt_reply")
+        )
+        return redirect("PWD:viewcomplaint")
+    else:
+        return render(request,'PWD/Update.html')

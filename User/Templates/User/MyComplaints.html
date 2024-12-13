@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 </head>
+
 <body>
     <form action="" method="post">
         {% csrf_token %}
@@ -18,6 +20,7 @@
                 <td>Title</td>
                 <td>Content</td>
                 <td>Response</td>
+                <td>Action</td>
             </tr>
             {% for i in ksebcomplaint %}
             <tr>
@@ -33,6 +36,7 @@
                     {% else %}
                     Not Replied
                     {% endif %}</td>
+                <td><a href="{% url 'User:updates' %}">View updates</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -47,8 +51,9 @@
                 <td>Title</td>
                 <td>Content</td>
                 <td>Response</td>
+                <td>Action</td>
             </tr>
-            {% for i in complaint %}
+            {% for i in muncipalitycomplaint %}
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{i.user.user_name}}</td>
@@ -57,12 +62,13 @@
                 <td>{{i.complaint_title}}</td>
                 <td>{{i.complaint_content}}</td>
                 <td>
-                    <!-- {% if i.complaint_status == 1 %}
-                    Replied
+                    {% if i.complaint_status == 1 %}
+                    {{i.complaint_response}}
                     {% else %}
-                    <a href="{% url 'Muncipality:reply' i.id %}">Reply</a>
-                    {% endif %} -->
+                    Not Replied
+                    {% endif %}</td>
                 </td>
+                <td><a href="{% url 'User:updates' %}">View updates</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -77,8 +83,9 @@
                 <td>Title</td>
                 <td>Content</td>
                 <td>Response</td>
+                <td>Action</td>
             </tr>
-            {% for i in complaint %}
+            {% for i in mvdcomplaint %}
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{i.user.user_name}}</td>
@@ -86,13 +93,14 @@
                 <td><a href="{{i.complaint_photo}}">View File</a></td>
                 <td>{{i.complaint_title}}</td>
                 <td>{{i.complaint_content}}</td>
-                <!-- <td>{% if i.complaint_status == 1 %}
-                    Replied
+                <td>{% if i.complaint_status == 1 %}
+                    {{i.complaint_response}}
                     {% else %}
-                    <a href="{% url 'MVD:reply' i.id %}">Reply</a>
-                    {% endif %}</td> -->
+                    Not Replied
+                    {% endif %}</td>
             </tr>
             {% endfor %}
+            <td><a href="{% url 'User:updates' %}">View updates</a></td>
         </table>
 
         PWD
@@ -105,8 +113,9 @@
                 <td>Title</td>
                 <td>Content</td>
                 <td>Response</td>
+                <td>Action</td> 
             </tr>
-            {% for i in complaint %}
+            {% for i in pwdcomplaint %}
             <tr>
                 <td>{{forloop.counter}}</td>
                 <td>{{i.user.user_name}}</td>
@@ -114,14 +123,17 @@
                 <td><a href="{{i.complaint_photo}}">View File</a></td>
                 <td>{{i.complaint_title}}</td>
                 <td>{{i.complaint_content}}</td>
-                <!-- <td>{% if i.complaint_status == 1 %}
-                    Replied
+                <td> {% if i.complaint_status == 1 %}
+                    {{i.complaint_response}}
                     {% else %}
-                    <a href="{% url 'PWD:reply' i.id %}">Reply</a>
-                    {% endif %}</td> -->
+                    Not Replied
+                    {% endif %}</td>
+                </td>
+                <td><a href="{% url 'User:updates' %}">View updates</a></td>
             </tr>
             {% endfor %}
         </table>
     </form>
 </body>
+
 </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+</head>
+<body>
+    Hello
+    <table>
+        <tr>
+            <td><a href="{% url 'Admin:viewkseb' %}">View KSEB</a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'Admin:viewmunciplity' %}">View Muncipality</a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'Admin:viewmvd' %}">View MVD</a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'Admin:viewpwd' %}">View PWD</a></td>
+        </tr>
+        <tr>
+            <td><a href="{% url 'Admin:viewuser' %}">View User</a></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -9,6 +9,7 @@ urlpatterns = [
     path('District/',views.district,name="district"),
     path('Category/',views.category,name="category"),
     path('Admin/',views.admin,name="Admin"),
+    path('Homepage/',views.homepage,name="homepage"),
     path('deladmin/<int:id>',views.deladmin,name="deladmin"),
     path('editadmin/<int:id>',views.editadmin,name="editadmin"),
     path('deldistrict/<int:id>',views.deldistrict,name="deldistrict"),

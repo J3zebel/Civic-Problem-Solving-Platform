@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect
 from Admin.models import *
 from Guest.models import *
+from django.conf import settings
+from supabase import create_client
 
+supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
 # Create your views here.
 def sum(request):
     if request.method=="POST":
@@ -108,19 +111,50 @@ def category(request):
     else:
         return render(request,'Admin/category.html',{'cat':cat})
     
+# def admin(request):
+#     sel=tbl_admin.objects.all()
+#     if request.method=="POST":
+#         name=request.POST.get("name")
+#         email=request.POST.get("email")
+#         pswd=request.POST.get("pswd")
+#         tbl_admin.objects.create(
+#             admin_name=name,admin_email=email,admin_pswd=pswd
+#         )
+#         msg="Data Inserted"
+#         return render(request,'Admin/Admin.html',{'msg':msg,'admin':sel})
+#     else:
+#         return render(request,'Admin/Admin.html',{'admin':sel})
+
 def admin(request):
     sel=tbl_admin.objects.all()
-    if request.method=="POST":
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
         name=request.POST.get("name")
-        email=request.POST.get("email")
-        pswd=request.POST.get("pswd")
-        tbl_admin.objects.create(
-            admin_name=name,admin_email=email,admin_pswd=pswd
-        )
-        msg="Data Inserted"
-        return render(request,'Admin/Admin.html',{'msg':msg,'admin':sel})
+
+        
+        try:
+            auth_response = supabase.auth.sign_up({
+                "email": email,
+                "password": password,
+            })
+           
+            
+            if auth_response.user:
+                user_data = auth_response.user  
+                user_id = user_data.id
+                
+                tbl_admin.objects.create(admin_id=user_id,admin_name=name,admin_email=email,admin_password=password)
+                
+                return redirect('Admin:admin')
+            else:
+                return render(request, "Admin/Admin.html", { "error": "Sign-up failed."})
+
+        except Exception as e:
+            print(e)
+            return render(request, "Admin/Admin.html", {"Admin":sel ,"error": "An error occurred during sign-up."})
     else:
-        return render(request,'Admin/Admin.html',{'admin':sel})
+        return render(request, "Admin/Admin.html", {'Admin':sel})
     
 
 def deladmin(request,id):
@@ -280,5 +314,9 @@ def userremove(request,id):
     user.user_status="1"
     user.save()
     return redirect("Admin:viewuser")
+
+
+def homepage(request):
+    return render(request, "Admin/Homepage.html")
   
 

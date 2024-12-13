@@ -123,7 +123,12 @@ def login(request):
                                 return redirect("KSEB:homepage")
                 
                             except tbl_kseb.DoesNotExist:
-                                return render(request,"Guest/Login.html",{"error":"User DoesNot Exist"})
+                                try:
+                                    admin=tbl_admin.objects.get(admin_id=user_id)
+                                    request.session['aid']=admin.admin_id
+                                    return redirect("Admin:homepage")
+                                except tbl_admin.DoesNotExist:
+                                    return render(request,"Guest/Login.html",{"error":"User DoesNot Exist"})
 
         else:
             return render(request,"Guest/Login.html",{"error":"Invalid Data"})
@@ -344,5 +349,8 @@ def ajaxlocal(request):
     place_id = request.GET.get('pid')
     local = tbl_localplace.objects.filter(place=place_id)
     return render(request, "Guest/AjaxLocal.html", {'local': local})
+
+
+
         
 
