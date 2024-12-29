@@ -249,3 +249,51 @@ def ajaxlike(request):
         tbl_like.objects.create(user=tbl_user.objects.get(user_id=request.session["uid"]),complaint=tbl_complaint.objects.get(id=request.GET.get("comid")))
         count = tbl_like.objects.filter(user=request.session["uid"],complaint=request.GET.get("comid")).count()
         return JsonResponse({"color":0,"count":count})
+    
+def muncipalityrequest(request,id):
+    user=tbl_user.objects.get(user_id=request.session['uid'])
+    if request.method=="POST":
+        content=request.POST.get("txt_content")
+        title=request.POST.get("txt_title")
+        tbl_request.objects.create(
+            request_title=title,request_content=content,user=user,muncipality=tbl_muncipality.objects.get(mun_id=id),
+            )
+        return render(request,'User/MuncipalityRequest.html',{'msg':"Data inserted"})
+    else:
+        return render(request,"User/MuncipalityRequest.html",{'user':user},)
+    
+def muncipalityrequest(request,id):
+    user=tbl_user.objects.get(user_id=request.session['uid'])
+    if request.method=="POST":
+        content=request.POST.get("txt_content")
+        title=request.POST.get("txt_title")
+        tbl_request.objects.create(
+            request_title=title,request_content=content,user=user,muncipality=tbl_muncipality.objects.get(mun_id=id),
+            )
+        return render(request,'User/MuncipalityRequest.html',{'msg':"Data inserted"})
+    else:
+        return render(request,"User/MuncipalityRequest.html",{'user':user},)
+    
+def mvdrequest(request,id):
+    user=tbl_user.objects.get(user_id=request.session['uid'])
+    if request.method=="POST":
+        content=request.POST.get("txt_content")
+        title=request.POST.get("txt_title")
+        tbl_request.objects.create(
+            request_title=title,request_content=content,user=user,mvd=tbl_mvd.objects.get(mvd_id=id),
+            )
+        return render(request,'User/MvdRequest.html',{'msg':"Data inserted"})
+    else:
+        return render(request,"User/MvdRequest.html",{'user':user},)
+    
+def ksebrequest(request,id):
+    user=tbl_user.objects.get(user_id=request.session['uid'])
+    if request.method=="POST":
+        content=request.POST.get("txt_content")
+        title=request.POST.get("txt_title")
+        tbl_request.objects.create(
+            request_title=title,request_content=content,user=user,kseb=tbl_kseb.objects.get(kseb_id=id),
+            )
+        return render(request,'User/KsebRequest.html',{'msg':"Data inserted"})
+    else:
+        return render(request,"User/KsebRequest.html",{'user':user},)

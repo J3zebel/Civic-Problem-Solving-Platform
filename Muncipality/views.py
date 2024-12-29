@@ -72,3 +72,8 @@ def update(request,id):
         return redirect("Muncipality:viewcomplaint")
     else:
         return render(request,'Muncipality/Update.html')
+    
+def viewreply(request):
+    muncipality=tbl_muncipality.objects.get(mun_id=request.session['mid']) 
+    request=tbl_request.objects.filter(muncipality=muncipality)
+    return render(request,"Muncipality/Viewreply.html",{'reply':reply})

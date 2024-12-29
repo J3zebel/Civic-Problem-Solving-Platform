@@ -24,4 +24,7 @@ urlpatterns = [
     path('Updates/',views.updates,name="updates"),
     path('public/',views.publiccomplaint,name="publiccomplaint"),
     path('ajaxlike/',views.ajaxlike,name="ajaxlike"),
+    path('muncipalityrequest/<str:id>',views.muncipalityrequest,name="muncipalityrequest"),
+    path('mvdrequest/<str:id>',views.mvdrequest,name="mvdrequest"),
+    path('ksebrequest/<str:id>',views.ksebrequest,name="ksebrequest"),
 ] 

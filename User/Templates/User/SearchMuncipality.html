@@ -35,7 +35,8 @@
                 <td> {{i.mun_contact}}</td>
                 <td>{{i.mun_email}}</td>
                 <td>{{i.mun_address}}</td>
-                <td ><a href="{% url 'User:muncipalitycomplaint' i.mun_id %}">Complaint</a></td>
+                <td ><a href="{% url 'User:muncipalitycomplaint' i.mun_id %}">Complaint</a></td><br>
+                <td ><a href="{% url 'User:muncipalityrequest' i.mun_id %}">Request</a></td>
             </tr>
             {% endfor %}
         </table>

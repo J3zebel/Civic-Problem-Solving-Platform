@@ -47,6 +47,7 @@
                 <td>{{i.kseb_email}}</td>
                 <td>{{i.kseb_address}}</td>
                 <td ><a href="{% url 'User:ksebcomplaint' i.kseb_id %}">Complaint</a></td>
+                <td ><a href="{% url 'User:ksebrequest' i.kseb_id %}">Request</a></td>
             </tr>
             {% endfor %}
         </table>

@@ -36,6 +36,7 @@
                 <td>{{i.mvd_email}}</td>
                 <td>{{i.mvd_address}}</td>
                 <td ><a href="{% url 'User:mvdcomplaint' i.mvd_id %}">Complaint</a></td>
+                <td ><a href="{% url 'User:mvdrequest' i.mvd_id %}">Request</a></td>
             </tr>
             {% endfor %}
         </table>

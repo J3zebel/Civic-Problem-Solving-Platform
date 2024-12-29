@@ -72,3 +72,8 @@ def update(request,id):
         return redirect("KSEB:viewcomplaint")
     else:
         return render(request,'KSEB/Update.html')
+    
+def viewreply(request):
+    kseb=tbl_kseb.objects.get(kseb_id=request.session['kid']) 
+    request=tbl_request.objects.filter(kseb=kseb)
+    return render(request,"KSEB/Viewreply.html",{'reply':reply})
