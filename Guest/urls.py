@@ -3,6 +3,8 @@ from Guest import views
 app_name="Guest"
 
 urlpatterns = [
+    path('',views.index,name="index"),
+
     path('User Reg/',views.user,name="user"),
     path('ajaxplace/',views.ajaxplace,name="ajaxplace"),
     path('Login/',views.login,name="login"),
