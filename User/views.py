@@ -250,17 +250,7 @@ def ajaxlike(request):
         count = tbl_like.objects.filter(user=request.session["uid"],complaint=request.GET.get("comid")).count()
         return JsonResponse({"color":0,"count":count})
     
-def muncipalityrequest(request,id):
-    user=tbl_user.objects.get(user_id=request.session['uid'])
-    if request.method=="POST":
-        content=request.POST.get("txt_content")
-        title=request.POST.get("txt_title")
-        tbl_request.objects.create(
-            request_title=title,request_content=content,user=user,muncipality=tbl_muncipality.objects.get(mun_id=id),
-            )
-        return render(request,'User/MuncipalityRequest.html',{'msg':"Data inserted"})
-    else:
-        return render(request,"User/MuncipalityRequest.html",{'user':user},)
+
     
 def muncipalityrequest(request,id):
     user=tbl_user.objects.get(user_id=request.session['uid'])
